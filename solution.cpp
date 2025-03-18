@@ -1,10 +1,6 @@
 #include "solution.h"
 #include "data.h"
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <ctime>
-#include <cmath>
 
 double Solution::CustoRota()
 {

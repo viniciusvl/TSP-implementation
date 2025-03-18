@@ -3,7 +3,6 @@
 #include "construcao.h"
 #include <time.h>
 #include <iostream>
-#include <vector>
 
 int main(){
     char *argv[2];
