@@ -4,13 +4,6 @@
 #include <vector>
 #include "data.h"
 
-struct insertionInfo // guarda as informações de cada inserção feita 
-{
-    int k; // número a ser testado
-    int aresta; // aresta a ser removida
-    double cost; // custo da inserção
-};
-
 struct Solution{
     Data & data = Data::getInstance();
 
@@ -20,8 +13,9 @@ struct Solution{
 
     void initialSubTour();
     double CustoRota();
-};
+    void print();
 
-Solution Construcao(); //retorna a primeira solucao básica tsp
+
+};
 
 #endif

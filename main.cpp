@@ -1,5 +1,6 @@
 #include "data.h"
 #include "solution.h"
+#include "construcao.h"
 #include <time.h>
 #include <iostream>
 #include <vector>
@@ -15,12 +16,7 @@ int main(){
     data.read(2, argv); 
 
     Solution s = Construcao();
-    for (auto &r: s.route){
-        std::cout << r << " ";
-    }
-
-    std::cout << '\n';
-    std::cout << "Custo: " << s.CustoRota();
+    s.print();
     
     return 0;
 }
