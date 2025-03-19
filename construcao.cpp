@@ -7,8 +7,7 @@
 #include <ctime>
 #include <cmath>
 
-//:: para ter acesso aos atributos da classe
-void Solution::initialSubTour() //constroi um subtour inicial aleatório
+void Solution::initialSubTour(std::vector<int> &CL) //constroi um subtour inicial aleatório
 {
     Data &data = Data::getInstance();
     int indiceAleatorio;
@@ -16,7 +15,6 @@ void Solution::initialSubTour() //constroi um subtour inicial aleatório
     for (int i = 2; i <= data.n; i++){
         CL.push_back(i);
     }
-    srand(time(NULL));
 
     while (route.size() < 5){
         indiceAleatorio = rand() % CL.size();
@@ -26,12 +24,12 @@ void Solution::initialSubTour() //constroi um subtour inicial aleatório
     }
 }
 
-std::vector<insertionInfo> CalcularCustos(Solution &s)
+std::vector<insertionInfo> CalcularCustos(Solution &s, std::vector<int> &CL)
 {
     Data &data = Data::getInstance();
 
     auto &mAdj = data.matrizAdj; 
-    std::vector<insertionInfo> custosInsercoes(s.CL.size() * (s.route.size()-1)); //tamanho de possibilidas
+    std::vector<insertionInfo> custosInsercoes(CL.size() * (s.route.size()-1)); //tamanho de possibilidas
     
     int l = 0; //itera no array de Structs
     for (int v = 0; v < (int)s.route.size()-1; v++)
@@ -39,7 +37,7 @@ std::vector<insertionInfo> CalcularCustos(Solution &s)
         int i = s.route[v]; //cidade analisada
         int j = s.route[v+1];
 
-        for (auto k: s.CL)
+        for (auto k: CL)
         {
             custosInsercoes[l].cost = (mAdj[i][k] + mAdj[j][k]) - mAdj[i][j]; //custo de cada inserção
             custosInsercoes[l].aresta = v+1;
@@ -52,18 +50,6 @@ std::vector<insertionInfo> CalcularCustos(Solution &s)
     return custosInsercoes;
 }
 
-void AdicionaAresta(Solution &s, std::vector<insertionInfo> &custos)
-{
-    // alfa nao pode ser 0, ja que rand() % 0 é indefinido
-    double alfa = (double)rand() / RAND_MAX; //RANDMAX é o maior vale que RAND() pode retornar
-    int i = rand() % ((int) ceil(alfa * custos.size())); //indice aleatorio
-
-    s.route.insert(s.route.begin() + custos[i].aresta, custos[i].k); //insere na rota
-
-    auto itRemove = std::find(s.CL.begin(), s.CL.end(), custos[i].k); //encontra o indice
-    s.CL.erase(itRemove); //exclui de CL
-}
-
 bool comp_custos(const insertionInfo &a, const insertionInfo &b) //funcao para o sort
 {
     return a.cost < b.cost;
@@ -72,14 +58,26 @@ bool comp_custos(const insertionInfo &a, const insertionInfo &b) //funcao para o
 Solution Construcao()
 {
     Solution s;
-    s.initialSubTour();
+    double alfa;
+    int i;
 
-    while (!s.CL.empty())
+    std::vector<int> CL;
+    s.initialSubTour(CL);
+
+    while (!CL.empty())
     {  
-        std::vector<insertionInfo> custosInsercao = CalcularCustos(s); //array com todos os custos
+        std::vector<insertionInfo> custosInsercao = CalcularCustos(s, CL); //array com todos os custos
         std::sort(custosInsercao.begin(), custosInsercao.end(), comp_custos); 
-        AdicionaAresta(s, custosInsercao);
+        
+        alfa = 0.5;
+        i = rand() % ((int) ceil(alfa * custosInsercao.size())); //indice aleatorio
+    
+        s.route.insert(s.route.begin() + custosInsercao[i].aresta, custosInsercao[i].k); //insere na rota
+    
+        auto itRemove = std::find(CL.begin(), CL.end(), custosInsercao[i].k); //encontra o indice
+        CL.erase(itRemove); //exclui de CL
     }
+    s.cost = s.CustoRota();
 
     return s;
 }

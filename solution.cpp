@@ -17,12 +17,12 @@ void Solution::print()
 {
     Data &data = Data::getInstance();
 
-    for (int i = 0; i < data.n - 1; i++)
+    for (int i = 0; i < data.n; i++)
     {
         std::cout << route[i] << " - ";
     }
     
     std::cout << route[data.n] << '\n';
-    std::cout << "Custo: " << CustoRota();
+    std::cout << "Custo: " << cost;
 }
 
