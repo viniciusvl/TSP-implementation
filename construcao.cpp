@@ -29,7 +29,7 @@ std::vector<insertionInfo> CalcularCustos(Solution &s, std::vector<int> &CL)
     Data &data = Data::getInstance();
 
     auto &mAdj = data.matrizAdj; 
-    std::vector<insertionInfo> custosInsercoes(CL.size() * (s.route.size()-1)); //tamanho de possibilidas
+    std::vector<insertionInfo> custosInsercoes(CL.size() * (s.route.size()-1)); //tamanho de possibilidades
     
     int l = 0; //itera no array de Structs
     for (int v = 0; v < (int)s.route.size()-1; v++)
