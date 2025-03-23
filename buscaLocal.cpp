@@ -3,6 +3,7 @@
 #include "data.h"
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 
 bool bestImprovementeSwap(Solution &s)
@@ -15,6 +16,7 @@ bool bestImprovementeSwap(Solution &s)
 
     for (int i = 1; i < s.route.size() - 2; i++) //itera sobre cada cidade i da rota
     {
+        std::cout << "Swap" << '\n';
         int vi = s.route[i]; 
         int vi_prev = s.route[i - 1];  
         int vi_next = s.route[i + 1]; 
@@ -52,5 +54,5 @@ bool bestImprovementeSwap(Solution &s)
 
 void BuscaLocal(Solution &s)
 {
-
+    
 }

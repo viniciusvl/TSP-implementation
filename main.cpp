@@ -1,6 +1,7 @@
 #include "data.h"
 #include "solution.h"
 #include "construcao.h"
+#include "buscaLocal.h"
 #include <time.h>
 #include <iostream>
 
@@ -14,8 +15,9 @@ int main(){
     Data & data = Data::getInstance();
     data.read(2, argv); 
 
+
+
     Solution s = Construcao();
-    s.print();
     
     return 0;
 }
