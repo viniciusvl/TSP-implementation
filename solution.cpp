@@ -23,6 +23,6 @@ void Solution::print()
     }
     
     std::cout << route[data.n] << '\n';
-    std::cout << "Custo: " << cost;
+    std::cout << "Custo: " << cost << '\n';
 }
 

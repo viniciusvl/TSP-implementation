@@ -17,7 +17,8 @@ int main(){
 
 
 
-    Solution s = Construcao();
-    
+    Solution s;
+
+
     return 0;
 }

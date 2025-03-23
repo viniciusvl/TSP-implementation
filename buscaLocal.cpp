@@ -16,12 +16,11 @@ bool bestImprovementeSwap(Solution &s)
 
     for (int i = 1; i < s.route.size() - 2; i++) //itera sobre cada cidade i da rota
     {
-        std::cout << "Swap" << '\n';
         int vi = s.route[i]; 
         int vi_prev = s.route[i - 1];  
         int vi_next = s.route[i + 1]; 
 
-        for (int j = i + 1; i < s.route.size() - 1; i++) // itera cada possibilidade de i
+        for (int j = i + 1; j < s.route.size() - 1; j++) // itera cada possibilidade de i
         {
             int vj = s.route[j];  
             int vj_prev = s.route[j - 1];
@@ -54,5 +53,5 @@ bool bestImprovementeSwap(Solution &s)
 
 void BuscaLocal(Solution &s)
 {
-    
+    bestImprovementeSwap(s);
 }
