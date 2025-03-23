@@ -15,10 +15,7 @@ int main(){
     Data & data = Data::getInstance();
     data.read(2, argv); 
 
-
-
     Solution s;
-
 
     return 0;
 }

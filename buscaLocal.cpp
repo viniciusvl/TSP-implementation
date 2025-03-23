@@ -53,5 +53,5 @@ bool bestImprovementeSwap(Solution &s)
 
 void BuscaLocal(Solution &s)
 {
-    bestImprovementeSwap(s);
+    
 }
