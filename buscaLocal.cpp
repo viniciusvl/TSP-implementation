@@ -71,7 +71,7 @@ bool bestImprovement2opt(Solution &s)
     int best_i, best_j; // salva o melhor indice para troca 
     double best_delta = 0;
 
-    for (int i = 1; i < s.route.size() - 1; i++) //itera sobre cada cidade i da rota
+    for (int i = 1; i < s.route.size() - 2; i++) //itera sobre cada cidade i da rota
     {
         for (int j = i + 1; j < s.route.size() - 1; j++) // itera cada possibilidade de i
         {
