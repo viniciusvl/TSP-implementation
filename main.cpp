@@ -15,7 +15,11 @@ int main(){
     Data & data = Data::getInstance();
     data.read(2, argv); 
 
-    Solution s;
+    Solution s = Construcao();
+    s.print();
+
+    BuscaLocal(s);
+
 
     return 0;
 }

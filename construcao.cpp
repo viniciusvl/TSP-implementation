@@ -77,7 +77,7 @@ Solution Construcao()
         auto itRemove = std::find(CL.begin(), CL.end(), custosInsercao[i].k); //encontra o indice
         CL.erase(itRemove); //exclui de CL
     }
-    s.CustoRota();
+    s.cost = s.CustoRota();
 
     return s;
 }

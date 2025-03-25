@@ -2,14 +2,15 @@
 #include "data.h"
 #include <iostream>
 
-void Solution::CustoRota()
+double Solution::CustoRota()
 {
     Data &data = Data::getInstance();
-    cost = 0;
+    double custo = 0;
     
     for (int i = 0; i < data.n - 1; i++){
-        cost += data.matrizAdj[route[i]][route[i+1]];
+        custo += data.matrizAdj[route[i]][route[i+1]];
     }
+    return custo;
 }
 
 void Solution::print()

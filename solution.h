@@ -11,8 +11,9 @@ struct Solution{
     double cost = 0;
 
     void initialSubTour(std::vector<int> &CL);
-    void CustoRota();
+    double CustoRota();
     void print();
+    double custoSwap(int i, int j);
 };
 
 
