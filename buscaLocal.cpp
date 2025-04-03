@@ -119,9 +119,9 @@ bool bestImprovementOrOpt(Solution &s, int bloco)
     double best_delta = 0;
     int best_insert, remove, valor;
 
-    for (int i = 1; i < s.route.size()-2; i++)
+    for (int i = 1; i < s.route.size() - 2; i++)
     {
-        for (int j = 0; j < s.route.size()-2; j++)
+        for (int j = 0; j < s.route.size() - 2; j++)
         {   
             if (i - 1 <= j && j <= i) // se j == i não precisa calcular
                 continue;
