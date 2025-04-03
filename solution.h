@@ -14,6 +14,7 @@ struct Solution{
     double CustoRota();
     void print();
     double custoSwap(int i, int j);
+    double custoOrOpt(int i, int j, int bloco);
 };
 
 
