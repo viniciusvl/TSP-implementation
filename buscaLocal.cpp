@@ -4,49 +4,11 @@
 #include <vector>
 #include <algorithm>
 
-double Solution::custoSwap(int i, int j) //calcula custos do 2 opt
-{
-    Data &data = Data::getInstance();
-    auto &m = data.matrizAdj;
-    double pre_swap, pos_swap;
-
-    if (j == i+1) //verifica se sao adjacentes
-    {
-        pre_swap = m[route[i-1]][route[i]] + m[route[j]][route[j+1]];
-
-        pos_swap = m[route[i-1]][route[j]] + m[route[i]][route[j+1]];
-    }else
-    {
-        pre_swap = m[route[i-1]][route[i]] + m[route[i]][route[i+1]] 
-                  + m[route[j-1]][route[j]] + m[route[j]][route[j+1]];
-    
-        //arcos apos swap: (i-1, j) (j, i+1) (j-1, i) (i, j+1)
-        pos_swap = m[route[i-1]][route[j]] + m[route[j]][route[i+1]] 
-                  + m[route[j-1]][route[i]] + m[route[i]][route[j+1]];
-    }
-    return pos_swap - pre_swap;
-}
-
-double Solution::custoOrOpt(int i, int j, int bloco) // calcula o custo dos movimentos do OrOpt
-{
-    Data &data = Data::getInstance();
-    auto &m = data.matrizAdj;
-
-    double a_subtrair, a_somar;
-
-    a_subtrair = m[route[i-1]][route[i]]
-                + m[route[i + bloco - 1]][route[i + bloco]]    
-                + m[route[j]][route[j+1]];                        
-
-    a_somar = m[route[i - 1]][route[i + bloco]]
-            + m[route[j]][route[i]]
-            + m[route[i + bloco - 1]][route[j + 1]];
-
-    return a_somar - a_subtrair;
-}
-
 bool bestImprovementSwap(Solution &s)
 {
+    Data &data = Data::getInstance();
+    auto &m = data.matrizAdj;
+
     int best_i, best_j; // salva o melhor indice para troca 
     double best_delta = 0, delta;
 
@@ -54,7 +16,23 @@ bool bestImprovementSwap(Solution &s)
     {
         for (int j = i + 1; j < s.route.size() - 1; j++) // itera cada possibilidade de i
         {
-            delta = s.custoSwap(i, j);
+            double pre_swap, pos_swap;
+        
+            if (j == i+1) //verifica se sao adjacentes
+            {
+                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[j]][s.route[j+1]];
+        
+                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[i]][s.route[j+1]];
+            }else
+            {
+                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[i]][s.route[i+1]] 
+                          + m[s.route[j-1]][s.route[j]] + m[s.route[j]][s.route[j+1]];
+            
+                //arcos apos swap: (i-1, j) (j, i+1) (j-1, i) (i, j+1)
+                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[j]][s.route[i+1]] 
+                          + m[s.route[j-1]][s.route[i]] + m[s.route[i]][s.route[j+1]];
+            }
+            double delta = pos_swap - pre_swap;
             
             if (delta < best_delta)
             {
@@ -78,6 +56,9 @@ bool bestImprovementSwap(Solution &s)
 
 bool bestImprovement2opt(Solution &s)
 {
+    Data &data = Data::getInstance();
+    auto &m = data.matrizAdj;
+
     int best_i, best_j; // salva o melhor indice para troca 
     double best_delta = 0;
 
@@ -85,7 +66,24 @@ bool bestImprovement2opt(Solution &s)
     {
         for (int j = i + 1; j < s.route.size() - 1; j++) // itera cada possibilidade de i
         {
-            double delta = s.custoSwap(i, j);
+            double pre_swap, pos_swap;
+        
+            if (j == i+1) //verifica se sao adjacentes
+            {
+                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[j]][s.route[j+1]];
+        
+                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[i]][s.route[j+1]];
+            }else
+            {
+                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[i]][s.route[i+1]] 
+                          + m[s.route[j-1]][s.route[j]] + m[s.route[j]][s.route[j+1]];
+            
+                //arcos apos swap: (i-1, j) (j, i+1) (j-1, i) (i, j+1)
+                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[j]][s.route[i+1]] 
+                          + m[s.route[j-1]][s.route[i]] + m[s.route[i]][s.route[j+1]];
+            }
+            double delta = pos_swap - pre_swap;
+
             if (delta < best_delta)
             {
                 best_delta = delta;
@@ -115,6 +113,9 @@ bool bestImprovement2opt(Solution &s)
 
 bool bestImprovementOrOpt(Solution &s, int bloco)
 {
+    Data &data = Data::getInstance();
+    auto &m = data.matrizAdj;
+
     double best_delta = 0;
     int best_insert, remove, best_i, valor;
 
@@ -124,8 +125,18 @@ bool bestImprovementOrOpt(Solution &s, int bloco)
         {   
             if (i - 1 <= j && j <= i + bloco-1) 
                 continue;
-
-            double delta = s.custoOrOpt(i, j, bloco);
+            
+                double a_subtrair, a_somar;
+            
+                a_subtrair = m[s.route[i-1]][s.route[i]]
+                            + m[s.route[i + bloco - 1]][s.route[i + bloco]]    
+                            + m[s.route[j]][s.route[j+1]];                        
+            
+                a_somar = m[s.route[i - 1]][s.route[i + bloco]]
+                        + m[s.route[j]][s.route[i]]
+                        + m[s.route[i + bloco - 1]][s.route[j + 1]];
+            
+                double delta = a_somar - a_subtrair;
 
             if (delta < best_delta)
             {
