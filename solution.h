@@ -15,9 +15,9 @@ struct Solution{
     double custoOrOpt(int i, int j, int bloco);
 };
 
-Solution Pertubacao(Solution &s);
+Solution Pertubacao(Solution s);
 
-Solution Solve();
+Solution Solve(int maxIter, int maxIterIls);
 
 
 

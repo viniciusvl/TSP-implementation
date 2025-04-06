@@ -1,10 +1,8 @@
 #include "solution.h"
 #include "data.h"
 #include "construcao.h"
-#include <iostream>
 #include <vector>
 #include <algorithm>
-#include <ctime>
 #include <cmath>
 
 void Solution::initialSubTour(std::vector<int> &CL) //constroi um subtour inicial aleatório

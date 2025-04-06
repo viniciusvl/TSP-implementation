@@ -3,7 +3,6 @@
 #include "data.h"
 #include <vector>
 #include <algorithm>
-#include <iostream>
 
 double Solution::custoSwap(int i, int j) //calcula custos do 2 opt
 {
@@ -181,11 +180,10 @@ void BuscaLocal(Solution &s)
                 break;
         }
 
-        if (improved)
+        if (improved && NL.size() != 5)
         {
             NL = {1, 2, 3, 4, 5};
-        }else
-        {
+        }else if (improved == false){
             NL.erase(NL.begin() + n);
         }
     }

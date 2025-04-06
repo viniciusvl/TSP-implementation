@@ -1,5 +1,7 @@
 #include "solution.h"
 #include "data.h"
+#include "construcao.h"
+#include "buscaLocal.h"
 #include <iostream>
 #include <cmath>
 
@@ -27,7 +29,7 @@ void Solution::print()
     std::cout << "Custo: " << cost << '\n';
 }
 
-Solution Pertubacao(Solution &s)
+Solution Pertubacao(Solution s)
 
 {
     int max = ceil((float)14/10); // retorna o tamanho maximo do bloco
@@ -47,9 +49,6 @@ Solution Pertubacao(Solution &s)
     std::vector<int> copia_i(s.route.begin() + i, s.route.begin() + i + tam_i);
     std::vector<int> copia_j(s.route.begin() + j, s.route.begin() + j + tam_j);
 
-    std::cout << "i= " << i << " j= " << j << '\n';
-
-
     s.route.insert(s.route.begin() + i, copia_j.begin(), copia_j.end());
     s.route.erase(s.route.begin() + i+tam_j, s.route.begin() + i +tam_j+tam_i);
 
@@ -61,9 +60,39 @@ Solution Pertubacao(Solution &s)
     return s;
 }
 
+Solution Solve(int maxIter, int maxIterIls)
+{
+    Solution bestOfAll;
+    bestOfAll.cost = INFINITY;
 
+    for (int i = 0; i < maxIter; i++)
+    {
+        Solution s = Construcao();
+        Solution best = s;
 
+        int iterIls = 0;
 
+        while (iterIls <= maxIterIls)
+        {
+            BuscaLocal(s);
+            if (s.cost < best.cost)            
+            {
+                best = s;
+                iterIls = 0;
+            }
+            s = Pertubacao(best);
+            iterIls++;
+        }
+        if (best.cost < bestOfAll.cost)
+        {
+            bestOfAll = best;
+        }
+    }
+
+    bestOfAll.cost = bestOfAll.CustoRota();
+
+    return bestOfAll;
+}
 
 
 
