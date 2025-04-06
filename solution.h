@@ -11,9 +11,7 @@ struct Solution{
     void initialSubTour(std::vector<int> &CL);
     double CustoRota();
     void print();
-    double custoSwap(int i, int j);
-    double custoOrOpt(int i, int j, int bloco);
-};
+}; 
 
 Solution Pertubacao(Solution s);
 
