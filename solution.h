@@ -5,8 +5,6 @@
 #include "data.h"
 
 struct Solution{
-    Data & data = Data::getInstance();
-
     std::vector<int> route = {1, 1};
     double cost = 0;
 
@@ -16,6 +14,11 @@ struct Solution{
     double custoSwap(int i, int j);
     double custoOrOpt(int i, int j, int bloco);
 };
+
+Solution Pertubacao(Solution &s);
+
+Solution Solve();
+
 
 
 #endif

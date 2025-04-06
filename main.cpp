@@ -19,7 +19,13 @@ int main(){
     s.print();
 
     BuscaLocal(s);
+    s.print();
 
+    Solution best = s;
+
+    best = Pertubacao(s);
+
+    s.print();
 
     return 0;
 }
