@@ -30,7 +30,6 @@ void Solution::print()
 }
 
 Solution Pertubacao(Solution s)
-
 {
     int max = ceil((float)14/10); // retorna o tamanho maximo do bloco
     int tam_i = rand() % (max - 1) + 2; // retorna valor entre 2 e max

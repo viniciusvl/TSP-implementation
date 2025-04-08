@@ -117,7 +117,7 @@ bool bestImprovementOrOpt(Solution &s, int bloco)
     auto &m = data.matrizAdj;
 
     double best_delta = 0;
-    int best_insert, remove, best_i, valor;
+    int best_insert, remove, best_i;
 
     for (int i = 1; i < s.route.size() - bloco - 1; i++)
     {
@@ -143,7 +143,6 @@ bool bestImprovementOrOpt(Solution &s, int bloco)
                 best_insert = j; // guarda qual melhor indice para adicionar
                 best_i = i;
                 remove = (j < i) ? i + bloco : i; // indice a remover 
-                valor = s.route[i];
                 best_delta = delta;
             }
         }
@@ -181,7 +180,7 @@ void BuscaLocal(Solution &s)
                 improved = bestImprovement2opt(s);
                 break;
             case 3: 
-                improved = bestImprovementSwap(s);
+                improved = bestImprovementOrOpt(s, 1);
                 break;
             case 4: 
                 improved = bestImprovementOrOpt(s, 2);
@@ -191,10 +190,10 @@ void BuscaLocal(Solution &s)
                 break;
         }
 
-        if (improved && NL.size() != 5)
+        if (improved)
         {
             NL = {1, 2, 3, 4, 5};
-        }else if (improved == false){
+        }else{
             NL.erase(NL.begin() + n);
         }
     }
