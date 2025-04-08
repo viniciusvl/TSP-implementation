@@ -3,6 +3,7 @@
 #include "data.h"
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 bool bestImprovementSwap(Solution &s)
 {
@@ -12,27 +13,29 @@ bool bestImprovementSwap(Solution &s)
     int best_i, best_j; // salva o melhor indice para troca 
     double best_delta = 0, delta;
 
-    for (int i = 1; i < s.route.size() - 2; i++) //itera sobre cada cidade i da rota
+    for (int i = 1; i < s.route.size() - 1; i++) //itera sobre cada cidade i da rota
     {
-        for (int j = i + 1; j < s.route.size() - 1; j++) // itera cada possibilidade de i
+        for (int j = i + 1; j < s.route.size() - 2; j++) // itera cada possibilidade de i
         {
-            double pre_swap, pos_swap;
+            double a_subtrair, a_somar;
         
             if (j == i+1) //verifica se sao adjacentes
             {
-                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[j]][s.route[j+1]];
+                a_subtrair = m[s.route[i-1]][s.route[i]] + m[s.route[j]][s.route[j+1]];
         
-                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[i]][s.route[j+1]];
+                a_somar = m[s.route[i-1]][s.route[j]] + m[s.route[i]][s.route[j+1]];
             }else
             {
-                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[i]][s.route[i+1]] 
-                          + m[s.route[j-1]][s.route[j]] + m[s.route[j]][s.route[j+1]];
+                a_subtrair = m[s.route[i-1]][s.route[i]] 
+                           + m[s.route[i]][s.route[i+1]] 
+                           + m[s.route[j-1]][s.route[j]] 
+                           + m[s.route[j]][s.route[j+1]];
             
                 //arcos apos swap: (i-1, j) (j, i+1) (j-1, i) (i, j+1)
-                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[j]][s.route[i+1]] 
+                a_somar = m[s.route[i-1]][s.route[j]] + m[s.route[j]][s.route[i+1]] 
                           + m[s.route[j-1]][s.route[i]] + m[s.route[i]][s.route[j+1]];
             }
-            double delta = pos_swap - pre_swap;
+            double delta = a_somar - a_subtrair;
             
             if (delta < best_delta)
             {
@@ -62,9 +65,9 @@ bool bestImprovement2opt(Solution &s)
     int best_i, best_j; // salva o melhor indice para troca 
     double best_delta = 0;
 
-    for (int i = 1; i < s.route.size() - 2; i++) //itera sobre cada cidade i da rota
+    for (int i = 1; i < s.route.size() - 1; i++) //itera sobre cada cidade i da rota
     {
-        for (int j = i + 1; j < s.route.size() - 1; j++) // itera cada possibilidade de i
+        for (int j = i + 1; j < s.route.size() - 2; j++) // itera cada possibilidade de i
         {
             double pre_swap, pos_swap;
         
@@ -75,6 +78,9 @@ bool bestImprovement2opt(Solution &s)
                 pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[i]][s.route[j+1]];
             }else
             {
+                // 1 2 3 4 5 6 7 8 9 1
+                // 1 2 6 5 4 3 7 8 9 1
+
                 pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[i]][s.route[i+1]] 
                           + m[s.route[j-1]][s.route[j]] + m[s.route[j]][s.route[j+1]];
             
@@ -101,7 +107,6 @@ bool bestImprovement2opt(Solution &s)
             s.route[i] = s.route[j];
             s.route[j] = aux;
         }
-
         s.cost += best_delta;
         return true;
     }else
@@ -154,6 +159,7 @@ bool bestImprovementOrOpt(Solution &s, int bloco)
 
         s.route.insert(s.route.begin() + best_insert+1, copia.begin(), copia.end());
         s.route.erase(s.route.begin() + remove, s.route.begin() + remove + bloco);
+
         s.cost += best_delta;
 
         return true;
@@ -165,27 +171,27 @@ bool bestImprovementOrOpt(Solution &s, int bloco)
 void BuscaLocal(Solution &s)
 {
     std::vector<int> NL = {1, 2, 3, 4, 5};
-    int n;
     bool improved = false;
 
     while (!NL.empty())
     {
-        n = rand() % NL.size(); 
+        int n = rand() % NL.size();
 
-        switch (NL[n]){
-            case 1: 
+        switch (NL[n])
+        {
+            case 1:
                 improved = bestImprovementSwap(s);
                 break;
-            case 2: 
+            case 2:
                 improved = bestImprovement2opt(s);
                 break;
-            case 3: 
+            case 3:
                 improved = bestImprovementOrOpt(s, 1);
                 break;
-            case 4: 
+            case 4:
                 improved = bestImprovementOrOpt(s, 2);
                 break;
-            case 5: 
+            case 5:
                 improved = bestImprovementOrOpt(s, 3);
                 break;
         }

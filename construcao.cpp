@@ -25,8 +25,8 @@ void Solution::initialSubTour(std::vector<int> &CL) //constroi um subtour inicia
 std::vector<insertionInfo> CalcularCustos(Solution &s, std::vector<int> &CL)
 {
     Data &data = Data::getInstance();
-
     auto &mAdj = data.matrizAdj; 
+    
     std::vector<insertionInfo> custosInsercoes(CL.size() * (s.route.size()-1)); //tamanho de possibilidades
     
     int l = 0; //itera no array de Structs
