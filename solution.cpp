@@ -45,12 +45,14 @@ Solution Pertubacao(Solution s)
             break;
     }
 
+    std::cout << "i= " << i << " j= " << j << " tam_i= " << tam_i << " tam_j= " << tam_j << '\n';
+
     std::vector<int> copia_i(s.route.begin() + i, s.route.begin() + i + tam_i);
     std::vector<int> copia_j(s.route.begin() + j, s.route.begin() + j + tam_j);
 
     s.route.insert(s.route.begin() + i, copia_j.begin(), copia_j.end());
     s.route.erase(s.route.begin() + i+tam_j, s.route.begin() + i +tam_j+tam_i);
-
+ 
     s.route.insert(s.route.begin() + j, copia_i.begin(), copia_i.end());
     s.route.erase(s.route.begin() + j + tam_i, s.route.begin() + j + tam_i + tam_j);
 
@@ -66,7 +68,7 @@ Solution Solve(int maxIter, int maxIterIls)
 
     for (int i = 0; i < maxIter; i++)
     {
-        Solution s = Construcao();
+        Solution s = Construcao(); // constroi solucao inicial  
         Solution best = s;
 
         int iterIls = 0;
@@ -79,16 +81,20 @@ Solution Solve(int maxIter, int maxIterIls)
                 best = s;
                 iterIls = 0;
             }
+            std::cout << "Antes da pertubacao: ";
+            s.print();
+
             s = Pertubacao(best);
+
+            std::cout << "Apos pertubacao: ";
+            s.print();
+
             iterIls++;
         }
-        if (best.cost < bestOfAll.cost)
-        {
+        if (best.cost < bestOfAll.cost){
             bestOfAll = best;
         }
     }
-
-    bestOfAll.cost = bestOfAll.CustoRota();
 
     return bestOfAll;
 }

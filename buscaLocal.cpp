@@ -36,7 +36,7 @@ bool bestImprovementSwap(Solution &s)
                           + m[s.route[j-1]][s.route[i]] + m[s.route[i]][s.route[j+1]];
             }
             double delta = a_somar - a_subtrair;
-            
+
             if (delta < best_delta)
             {
                 best_delta = delta;
@@ -48,8 +48,12 @@ bool bestImprovementSwap(Solution &s)
 
     if (best_delta < 0) // só há melhora se (custo pós-swap - custo pré-swap) é negativo
     {
-        std::swap(s.route[best_i], s.route[best_j]);
+        int aux = s.route[best_j];
+        s.route[best_j] = s.route[best_i];
+        s.route[best_i] = aux;
+
         s.cost += best_delta;
+
         return true;
     }else
     {
@@ -70,24 +74,14 @@ bool bestImprovement2opt(Solution &s)
         for (int j = i + 1; j < s.route.size() - 2; j++) // itera cada possibilidade de i
         {
             double pre_swap, pos_swap;
-        
-            if (j == i+1) //verifica se sao adjacentes
-            {
-                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[j]][s.route[j+1]];
-        
-                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[i]][s.route[j+1]];
-            }else
-            {
-                // 1 2 3 4 5 6 7 8 9 1
-                // 1 2 6 5 4 3 7 8 9 1
 
-                pre_swap = m[s.route[i-1]][s.route[i]] + m[s.route[i]][s.route[i+1]] 
-                          + m[s.route[j-1]][s.route[j]] + m[s.route[j]][s.route[j+1]];
+            pre_swap = m[s.route[i-1]][s.route[i]] 
+                     + m[s.route[j]][s.route[j+1]];
             
                 //arcos apos swap: (i-1, j) (j, i+1) (j-1, i) (i, j+1)
-                pos_swap = m[s.route[i-1]][s.route[j]] + m[s.route[j]][s.route[i+1]] 
-                          + m[s.route[j-1]][s.route[i]] + m[s.route[i]][s.route[j+1]];
-            }
+            pos_swap = m[s.route[i-1]][s.route[j]]  
+                     + m[s.route[i]][s.route[j+1]];
+            
             double delta = pos_swap - pre_swap;
 
             if (delta < best_delta)
@@ -105,8 +99,9 @@ bool bestImprovement2opt(Solution &s)
         {
             int aux = s.route[i];
             s.route[i] = s.route[j];
-            s.route[j] = aux;
+            s.route[j] = aux;        
         }
+
         s.cost += best_delta;
         return true;
     }else
@@ -173,9 +168,9 @@ void BuscaLocal(Solution &s)
     std::vector<int> NL = {1, 2, 3, 4, 5};
     bool improved = false;
 
-    while (!NL.empty())
+    while (NL.empty() == false)
     {
-        int n = rand() % NL.size();
+        int n = rand() % NL.size(); 
 
         switch (NL[n])
         {
@@ -204,4 +199,3 @@ void BuscaLocal(Solution &s)
         }
     }
 }
-

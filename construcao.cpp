@@ -5,8 +5,10 @@
 #include <algorithm>
 #include <cmath>
 
-void Solution::initialSubTour(std::vector<int> &CL) //constroi um subtour inicial aleatório
+std::vector<int> initialSubTour(Solution &s) //constroi um subtour inicial aleatório
 {
+    std::vector<int> CL;
+
     Data &data = Data::getInstance();
     int indiceAleatorio;
 
@@ -14,12 +16,14 @@ void Solution::initialSubTour(std::vector<int> &CL) //constroi um subtour inicia
         CL.push_back(i);
     }
 
-    while (route.size() < 5){
+    while (s.route.size() < 5){
         indiceAleatorio = rand() % CL.size();
 
-        route.insert(route.begin()+1, CL[indiceAleatorio]);
+        s.route.insert(s.route.begin()+1, CL[indiceAleatorio]);
         CL.erase(CL.begin()+indiceAleatorio);
     }
+
+    return CL;
 }
 
 std::vector<insertionInfo> CalcularCustos(Solution &s, std::vector<int> &CL)
@@ -59,8 +63,7 @@ Solution Construcao()
     double alfa;
     int i;
 
-    std::vector<int> CL;
-    s.initialSubTour(CL);
+    std::vector<int> CL = initialSubTour(s);
 
     while (!CL.empty())
     {  
