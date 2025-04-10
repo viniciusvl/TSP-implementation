@@ -45,8 +45,6 @@ Solution Pertubacao(Solution s)
             break;
     }
 
-    std::cout << "i= " << i << " j= " << j << " tam_i= " << tam_i << " tam_j= " << tam_j << '\n';
-
     std::vector<int> copia_i(s.route.begin() + i, s.route.begin() + i + tam_i);
     std::vector<int> copia_j(s.route.begin() + j, s.route.begin() + j + tam_j);
 
@@ -81,14 +79,8 @@ Solution Solve(int maxIter, int maxIterIls)
                 best = s;
                 iterIls = 0;
             }
-            std::cout << "Antes da pertubacao: ";
-            s.print();
 
             s = Pertubacao(best);
-
-            std::cout << "Apos pertubacao: ";
-            s.print();
-
             iterIls++;
         }
         if (best.cost < bestOfAll.cost){

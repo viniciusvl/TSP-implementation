@@ -5,5 +5,4 @@
 
 void BuscaLocal(Solution &s);
 
-
 #endif
