@@ -4,13 +4,20 @@
 #include "buscaLocal.h"
 #include <iostream>
 #include <cmath>
+#include <set>
+
+bool Duplicata(const std::vector<int>& vec) {
+    std::set<int> elementos(vec.begin(), vec.end());
+
+    return vec.size() - elementos.size();
+}
 
 double Solution::CustoRota()
 {
     Data &data = Data::getInstance();
     double custo = 0;
     
-    for (int i = 0; i < data.n - 1; i++){
+    for (int i = 0; i < data.n; i++){
         custo += data.matrizAdj[route[i]][route[i+1]];
     }
     return custo;
@@ -29,21 +36,39 @@ void Solution::print()
     std::cout << "Custo: " << cost << '\n';
 }
 
+void print(std::vector<int> &a)
+{
+    for (auto k: a)
+    {
+        std::cout << k << " ";
+    }
+    std::cout << '\n';
+}
+
+/*
+
+    i = rand() % (s.route.size()/2 - 1) + 1; // retorna entre 1 e o elemento anterior ao valor do meio
+
+    int soma_j = (s.route.size() - tam_j) - (i + tam_i); // retorna o numero aleatorio para adicionar em j APÓS i
+    j = (i + tam_i) + (rand() % soma_j); // retorna o indice de j
+
+*/
+
+
 Solution Pertubacao(Solution s)
 {
+    Data &data = Data::getInstance();
+    auto &m = data.matrizAdj;
+
     int max = ceil((float)14/10); // retorna o tamanho maximo do bloco
     int tam_i = rand() % (max - 1) + 2; // retorna valor entre 2 e max
     int tam_j = rand() % (max - 1) + 2; // retorna entre 2 e max
     int i, j;
 
-    i = rand() % (s.route.size() - 3) + 1; // retorna valor entre 1 e o ante penúltimo 
+    i = rand() % (s.route.size()/2 - 1) + 1; // retorna entre 1 e o elemento anterior ao valor do meio
 
-    while (1){
-        j = rand() % (s.route.size() - 3) + 1; // retorna entre 1 e o ante penúltimo
-
-        if ((j <= i - tam_j || j >= i + tam_i) && (j + tam_j < s.route.size() - 1)) // verifica se não são sobrepostos
-            break;
-    }
+    int soma_j = (s.route.size() - tam_j) - (i + tam_i); // retorna o numero aleatorio para adicionar em j APÓS i
+    j = (i + tam_i) + (rand() % soma_j); // retorna o indice de j
 
     std::vector<int> copia_i(s.route.begin() + i, s.route.begin() + i + tam_i);
     std::vector<int> copia_j(s.route.begin() + j, s.route.begin() + j + tam_j);
@@ -81,6 +106,7 @@ Solution Solve(int maxIter, int maxIterIls)
             }
 
             s = Pertubacao(best);
+
             iterIls++;
         }
         if (best.cost < bestOfAll.cost){
