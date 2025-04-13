@@ -4,13 +4,6 @@
 #include "buscaLocal.h"
 #include <iostream>
 #include <cmath>
-#include <set>
-
-bool Duplicata(const std::vector<int>& vec) {
-    std::set<int> elementos(vec.begin(), vec.end());
-
-    return vec.size() - elementos.size();
-}
 
 double Solution::CustoRota()
 {
@@ -36,48 +29,35 @@ void Solution::print()
     std::cout << "Custo: " << cost << '\n';
 }
 
-void print(std::vector<int> &a)
-{
-    for (auto k: a)
-    {
-        std::cout << k << " ";
-    }
-    std::cout << '\n';
-}
-
-/*
-
-    i = rand() % (s.route.size()/2 - 1) + 1; // retorna entre 1 e o elemento anterior ao valor do meio
-
-    int soma_j = (s.route.size() - tam_j) - (i + tam_i); // retorna o numero aleatorio para adicionar em j APÓS i
-    j = (i + tam_i) + (rand() % soma_j); // retorna o indice de j
-
-*/
-
-
 Solution Pertubacao(Solution s)
 {
     Data &data = Data::getInstance();
     auto &m = data.matrizAdj;
 
-    int max = ceil((float)14/10); // retorna o tamanho maximo do bloco
+    int max = ceil((float)data.n / 10); // retorna o tamanho maximo do bloco
     int tam_i = rand() % (max - 1) + 2; // retorna valor entre 2 e max
     int tam_j = rand() % (max - 1) + 2; // retorna entre 2 e max
     int i, j;
 
-    i = rand() % (s.route.size()/2 - 1) + 1; // retorna entre 1 e o elemento anterior ao valor do meio
+    i = rand() % (s.route.size() / 2 - 1) + 1; // retorna entre 1 e o elemento anterior ao valor do meio
 
     int soma_j = (s.route.size() - tam_j) - (i + tam_i); // retorna o numero aleatorio para adicionar em j APÓS i
     j = (i + tam_i) + (rand() % soma_j); // retorna o indice de j
 
+
     std::vector<int> copia_i(s.route.begin() + i, s.route.begin() + i + tam_i);
     std::vector<int> copia_j(s.route.begin() + j, s.route.begin() + j + tam_j);
 
+    std::cout << "i= " << i << " j= " << j << '\n';
+    std::cout << "tam_i= " << tam_i << " tam_j= " << tam_j << '\n';
+
+    s.route.erase(s.route.begin() + i, s.route.begin() + i + tam_i);
     s.route.insert(s.route.begin() + i, copia_j.begin(), copia_j.end());
-    s.route.erase(s.route.begin() + i+tam_j, s.route.begin() + i +tam_j+tam_i);
  
+    j = j + (tam_j - tam_i);
+
+    s.route.erase(s.route.begin() + j, s.route.begin() + j + tam_j);
     s.route.insert(s.route.begin() + j, copia_i.begin(), copia_i.end());
-    s.route.erase(s.route.begin() + j + tam_i, s.route.begin() + j + tam_i + tam_j);
 
     s.cost = s.CustoRota();
 
@@ -106,7 +86,6 @@ Solution Solve(int maxIter, int maxIterIls)
             }
 
             s = Pertubacao(best);
-
             iterIls++;
         }
         if (best.cost < bestOfAll.cost){
