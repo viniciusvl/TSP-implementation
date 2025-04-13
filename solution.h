@@ -16,6 +16,4 @@ Solution Pertubacao(Solution s);
 
 Solution Solve(int maxIter, int maxIterIls);
 
-
-
 #endif

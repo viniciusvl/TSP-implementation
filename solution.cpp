@@ -48,8 +48,6 @@ Solution Pertubacao(Solution s)
     std::vector<int> copia_i(s.route.begin() + i, s.route.begin() + i + tam_i);
     std::vector<int> copia_j(s.route.begin() + j, s.route.begin() + j + tam_j);
 
-    std::cout << "i= " << i << " j= " << j << '\n';
-    std::cout << "tam_i= " << tam_i << " tam_j= " << tam_j << '\n';
 
     s.route.erase(s.route.begin() + i, s.route.begin() + i + tam_i);
     s.route.insert(s.route.begin() + i, copia_j.begin(), copia_j.end());
