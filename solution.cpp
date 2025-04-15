@@ -44,6 +44,35 @@ Solution Pertubacao(Solution s)
     int soma_j = (s.route.size() - tam_j) - (i + tam_i); // retorna o numero aleatorio para adicionar em j APÓS i
     j = (i + tam_i) + (rand() % soma_j); // retorna o indice de j
 
+    double sub, som;
+
+    if (i + tam_i == j)
+    {
+        // Cálculo de subtração:
+        sub = m[s.route[i - 1]][s.route[i]]
+            + m[s.route[i + tam_i - 1]][s.route[j]]
+            + m[s.route[j + tam_j - 1]][s.route[j + tam_j]];
+
+        // Cálculo de soma:
+        som = m[s.route[i - 1]][s.route[j]]
+            + m[s.route[j + tam_j - 1]][s.route[i]]
+            + m[s.route[i + tam_i - 1]][s.route[j + tam_j]];
+    }else
+    {
+            // Cálculo de subtração:
+        sub = m[s.route[i - 1]][s.route[i]]
+            + m[s.route[i + tam_i - 1]][s.route[i + tam_i]]
+            + m[s.route[j - 1]][s.route[j]]
+            + m[s.route[j + tam_j - 1]][s.route[j + tam_j]];
+
+        // Cálculo de soma:
+        som = m[s.route[i - 1]][s.route[j]]
+            + m[s.route[j + tam_j - 1]][s.route[i + tam_i]]
+            + m[s.route[j - 1]][s.route[i]]
+            + m[s.route[i + tam_i - 1]][s.route[j + tam_j]];
+    }
+
+    s.cost += (som - sub);
 
     std::vector<int> copia_i(s.route.begin() + i, s.route.begin() + i + tam_i);
     std::vector<int> copia_j(s.route.begin() + j, s.route.begin() + j + tam_j);
@@ -56,8 +85,6 @@ Solution Pertubacao(Solution s)
 
     s.route.erase(s.route.begin() + j, s.route.begin() + j + tam_j);
     s.route.insert(s.route.begin() + j, copia_i.begin(), copia_i.end());
-
-    s.cost = s.CustoRota();
 
     return s;
 }
