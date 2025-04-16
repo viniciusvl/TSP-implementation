@@ -1,3 +1,5 @@
+This benchmak was made with an AMD Ryzen 5 4600H 3.00 GHz 
+
 a280:  tempo: 118.812 custo: 2579
 ali535:  tempo: 2164.81 custo: 202453
 att48:  tempo: 0.435916 custo: 10628
