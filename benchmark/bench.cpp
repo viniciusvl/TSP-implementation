@@ -27,7 +27,7 @@ int main(){
     double mediaTempo = somaTempo / count;
     double mediaCusto = somaCustos / count;
 
-    benchmark << "a280: " << " tempo: " << mediaTempo << " custo: " <<  mediaCusto << '\n';
+    benchmark << "fl417: " << " tempo: " << mediaTempo << " custo: " <<  mediaCusto << '\n';
 
 
 
