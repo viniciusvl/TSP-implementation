@@ -1,4 +1,7 @@
+a280:  tempo: 118.812 custo: 2579
+ali535:  tempo: 2164.81 custo: 202453
 att48:  tempo: 0.435916 custo: 10628
+att532:  tempo: 1988.7 custo: 27730.7
 bayg29:  tempo: 0.0653527 custo: 1610
 bays29:  tempo: 0.0694825 custo: 2020
 berlin52:  tempo: 0.47368 custo: 7542
@@ -35,6 +38,9 @@ kroC100:  tempo: 4.78943 custo: 20749
 kroD100:  tempo: 5.37241 custo: 21294
 kroE100:  tempo: 5.0234 custo: 22068
 lin105:  tempo: 5.53396 custo: 14379
+lin318:  tempo: 231.218 custo: 42043.9
+linhp318:  tempo: 232.005 custo: 42043.7
+pcb442:  tempo: 825.418 custo: 50875
 pr107:  tempo: 6.32486 custo: 44303
 pr124:  tempo: 8.61083 custo: 59030
 pr136:  tempo: 18.7735 custo: 96772
@@ -55,3 +61,5 @@ tsp225:  tempo: 59.3849 custo: 3916
 u159:  tempo: 13.693 custo: 42080
 ulysses16:  tempo: 0.00782336 custo: 6859
 ulysses22:  tempo: 0.0219011 custo: 7013
+
+
