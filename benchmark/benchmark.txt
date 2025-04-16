@@ -62,4 +62,4 @@ u159:  tempo: 13.693 custo: 42080
 ulysses16:  tempo: 0.00782336 custo: 6859
 ulysses22:  tempo: 0.0219011 custo: 7013
 
-
+fl417:  tempo: 473.348 custo: 11861
